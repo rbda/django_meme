@@ -1,0 +1,11 @@
+<h1>Django Image Meme Maker</h1>
+<ul>
+    {% for meme in finishedmemes_list %}
+        <table style="border: 5px solid brown;">
+            <td>
+                <h2>{{ meme.title }}</h2>
+                <img src="{{ meme.image.url }}" alt="{{ meme.title }}">
+            </td>
+        </table>
+    {% endfor %}
+</ul>
