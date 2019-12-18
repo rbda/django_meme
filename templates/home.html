@@ -1,11 +1,38 @@
-<h1>Django Image Meme Maker</h1>
-<ul>
-    {% for meme in finishedmemes_list %}
-        <table style="border: 5px solid brown;">
-            <td>
-                <h2>{{ meme.title }}</h2>
-                <img src="{{ meme.image.url }}" alt="{{ meme.title }}">
-            </td>
-        </table>
-    {% endfor %}
-</ul>
+{% extends 'base.html' %}
+{% block body %}
+    <h1>Django Image Meme Maker</h1>
+    <ul>
+        <h2>Finished Memes</h2>
+        {% if finishedMEMES %}
+            {% for meme in finishedMEMES %}
+                <table style="border: 5px solid brown;">
+                    <td>
+                        <h3>{{ meme.title }}</h3>
+                        <img src="{{ meme.meme_image.image }}" alt="{{ meme.title }}">
+                    </td>
+                </table>
+                <br>
+            {% endfor %}
+
+        {% else %}
+            <h3>No Memes Yet</h3>
+        {% endif %}
+    </ul>
+
+    <ul>
+        <h2>Base Images</h2>
+        <h3>Add new a base image <a href="{% url 'add_image' %}">here</a></h3>
+        {% for image in baseimages_list %}
+            <table style="border: 5px solid orange;">
+                <td>
+                    {#                <h3>{{ meme.title }}</h3>#}
+                    <img src="{{ image.image.url }}">
+                    <p>{{ image.image.url }}</p>
+                    <a class="btn btn-primary" href="{% url 'add_meme_from_image' image.pk %}"
+                       role="button">Make a Meme from this image</a>
+                </td>
+            </table>
+            <br>
+        {% endfor %}
+    </ul>
+{% endblock body %}

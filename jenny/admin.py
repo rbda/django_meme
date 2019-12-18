@@ -1,7 +1,12 @@
 from django.contrib import admin
 
-from .models import BaseImages, FinishedMemes
+from .models import BaseImage, FinishedMeme, MemeImage
 
 
-admin.site.register(BaseImages)
-admin.site.register(FinishedMemes)
+class FinishedMemeAdmin(admin.ModelAdmin):
+    exclude = ('meme_image', )
+
+
+admin.site.register(BaseImage)
+admin.site.register(FinishedMeme, FinishedMemeAdmin)
+admin.site.register(MemeImage)
