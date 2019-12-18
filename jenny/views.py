@@ -24,19 +24,14 @@ class CreateBaseImage(CreateView):
     success_url = reverse_lazy('home')
 
 
-class MakeMemeMixin:
-    model = FinishedMeme
-    success_url = reverse_lazy('home')
-
-
-class CreateMeme(CreateView, MakeMemeMixin):
+class CreateMeme(CreateView):
     model = FinishedMeme
     form_class = BaseFinishedMemeForm
     template_name = 'makememe.html'
     success_url = reverse_lazy('home')
 
 
-class CreateMemeExistingImage(CreateView, MakeMemeMixin):
+class CreateMemeExistingImage(CreateView):
     model = FinishedMeme
     template_name = 'meme_from_image.html'
     fields = None
