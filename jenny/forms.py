@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 from jenny.models import BaseImage, FinishedMeme, MemeImage
-from jenny.memeGenerator import *
+from jenny.memeGenerator import make_meme
 from PIL import Image
 
 
