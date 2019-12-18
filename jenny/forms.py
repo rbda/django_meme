@@ -1,6 +1,5 @@
 from django import forms
 from django.conf import settings
-from django.utils.text import slugify
 from jenny.models import BaseImage, FinishedMeme, MemeImage
 from jenny.memeGenerator import *
 from PIL import Image
@@ -29,21 +28,19 @@ class MemeCreateCustomForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        # print(f"cleaned data: {cleaned_data}")
         title = cleaned_data.get("title")
-        topString = cleaned_data.get("top_text")
-        print(topString)
-        bottomString = cleaned_data.get("bottom_text")
-        if not bottomString:
-            bottomString = ""
-        if not topString:
-            topString = ""
+        top_string = cleaned_data.get("top_text")
+        bottom_string = cleaned_data.get("bottom_text")
+        if not bottom_string:
+            bottom_string = ""
+        if not top_string:
+            top_string = ""
         filename = cleaned_data.get("base_image").image
-        img = make_meme(topString=topString, bottomString=bottomString, filename=filename, title=title)
+        img = make_meme(top_string=top_string, bottom_string=bottom_string, filename=filename,
+                        title=title)
         file_path = "." + settings.MEDIA_URL + "images/memes/" + img.filename
         img.save(file_path, "PNG")
         the_image = Image.open(file_path)
         finished_meme = MemeImage.objects.create(image=the_image.filename)
         cleaned_data['meme_image'] = finished_meme
-        print(f"cleaned data: {cleaned_data}")
         return cleaned_data
